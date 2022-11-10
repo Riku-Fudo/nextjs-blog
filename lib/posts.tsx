@@ -10,7 +10,7 @@ const postsDirectory = path.join(process.cwd(), 'posts');
 export function getSortedPostsData() {
   // /posts 下のファイル名一覧を取得する
   const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
+  const allPostsData = fileNames.map((fileName)=> {
     // id を取得するために、拡張子 .md をファイル名から除去する
     const id = fileName.replace(/\.md$/, '');
 
@@ -24,7 +24,7 @@ export function getSortedPostsData() {
     // id とデータをあわせる
     return {
       id,
-      ...matterResult.data,
+      ...matterResult.data as {date: string, title:string},
     };
   });
   // 日付で投稿をソートする
@@ -51,7 +51,7 @@ export function getAllPostIds() {
   });
 }
 
-export async function getPostData(id) {
+export async function getPostData(id:string) {
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
